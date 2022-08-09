@@ -1,15 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
 
-<head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title><?php bloginfo('name') ?></title>
-</head>
+/**
+ * Main template file.
+ * 
+ * @package QodeSquare
+ */
 
-<body>
+get_header();
+?>
 
-</body>
 
-</html>
+<div class="container-fluid">
+	content
+</div>
+
+<?php get_footer();
