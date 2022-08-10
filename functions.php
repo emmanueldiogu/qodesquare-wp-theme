@@ -16,6 +16,7 @@ if (!defined('QODESQUARE_DIR_URI')) {
 }
 
 require_once QODESQUARE_DIR_PATH . '/inc/helpers/autoloader.php';
+require_once QODESQUARE_DIR_PATH . '/inc/helpers/template-tags.php';
 
 function qodesquare_get_theme_instance()
 {
@@ -23,10 +24,3 @@ function qodesquare_get_theme_instance()
 }
 
 qodesquare_get_theme_instance();
-
-
-function qodesquare_enqueue_scripts()
-{
-}
-
-add_action('wp_enqueue_scripts', 'qodesquare_enqueue_scripts');

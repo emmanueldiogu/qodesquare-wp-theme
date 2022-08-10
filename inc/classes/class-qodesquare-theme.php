@@ -49,7 +49,19 @@ class QODESQUARE_THEME
 			'default-repeat' => 'repeat',
 		]);
 
+		/**
+		 * Enable support for Post Thumbnails on posts and pages.
+		 * 
+		 * Adding this will allow you to select the featured image on posts and pages.
+		 * 
+		 * @link https://developer.wordpress.org/themes/functionality/featured-images-post-thumbnails/
+		 */
 		add_theme_support('post-thumbnails');
+
+		/**
+		 * Register image sizes
+		 */
+		add_image_size('featured-thumbnail', 416, 312, true);
 
 		add_theme_support('customize-selective-refresh-widgets');
 
