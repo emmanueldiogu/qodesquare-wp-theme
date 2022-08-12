@@ -25,30 +25,48 @@ class Meta_Boxes
 		/**
 		 * Actions
 		 */
-		add_action('wp_enqueue_scripts', [$this, 'register_styles']);
-		add_action('wp_enqueue_scripts', [$this, 'register_scripts']);
+		add_action('add_meta_boxes', [$this, 'add_custom_meta_box']);
+		add_action('save_post', [$this, 'save_post_meta_data']);
 	}
 
-	public function register_styles()
+	public function add_custom_meta_box()
 	{
-		// Register Styles
-		wp_register_style('bootstrap-css', QODESQUARE_DIR_URI . '/assets/vendor/bootstrap/css/bootstrap.min.css', [], false, 'all');
-		wp_register_style('stylesheet', get_stylesheet_uri(), [], filemtime(QODESQUARE_DIR_PATH . '/style.css'), 'all');
-
-		// Enqueue Styles
-		wp_enqueue_style('bootstrap-css');
-		wp_enqueue_style('stylesheet');
+		$screens = ['post'];
+		foreach ($screens as $screen) {
+			add_meta_box(
+				'hide-page-title',					// Unique ID
+				__('Hide page title', 'qodesquare'), // Box title
+				[$this, 'custom_meta_box_html'],	// Content callback, must be of type callable
+				$screen,							// Post type
+				'side'							// context
+			);
+		}
 	}
 
-	public function register_scripts()
+	public function custom_meta_box_html($post)
 	{
-		// Register Scripts
-		wp_register_script('bootstrap-js', QODESQUARE_DIR_URI . '/assets/vendor/bootstrap/js/bootstrap.bundle.min.js', [], false, true);
-		wp_register_script('main-js', QODESQUARE_DIR_URI . '/assets/js/main.js', [], filemtime(QODESQUARE_DIR_PATH . '/assets/js/main.js'), true);
+		$value = get_post_meta($post->ID, '_hide_page_title', true); ?>
+<label for="qodesquare-hide-title-field"><?php esc_html_e('Hide the page title', 'qodesquare'); ?></label>
+<select name="qodesquare_hide_title_field" id="qodesquare-hide-title-field" class="postbox">
+	<option value=""><?php esc_html_e('Select', 'qodesquare') ?></option>
+	<option value="yes" <?php selected($value, 'yes'); ?>>
+		<?php esc_html_e('Yes', 'qodesquare') ?>
+	</option>
+	<option value="no" <?php selected($value, 'no'); ?>>
+		<?php esc_html_e('No', 'qodesquare') ?>
+	</option>
+</select>
+<?php
+	}
 
-		// Enqueue Scripts
-		wp_enqueue_script('jquery');
-		wp_enqueue_script('bootstrap-js');
-		wp_enqueue_script('main-js');
+	public function save_post_meta_data($post_id)
+	{
+		if (array_key_exists('qodesquare_hide_title_field', $_POST)) {
+			update_post_meta(
+				$post_id,
+				'_hide_page_title',
+				$_POST['qodesquare_hide_title_field']
+			);
+		}
 	}
 }

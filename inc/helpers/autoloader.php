@@ -53,7 +53,7 @@ function autoloader($resource = '')
 				$directory = 'traits';
 				$file_name = sprintf('trait-%s', trim(strtolower($path[2])));
 				break;
-			case 'widgets';
+			case 'widgets':
 			case 'blocks': //phpcs:ignore PSR2.ControlStructures.SwitchDeclaration.TerminatingComment
 				/**
 				 * If there is class name provided for specific directory, then load that,
